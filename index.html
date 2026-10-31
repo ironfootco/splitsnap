@@ -228,6 +228,16 @@
     // ==========================================
     const THEMES = [
         {
+            id: "industrial_craftsman",
+            name: "Industrial Craftsman (Test Frame)",
+            type: "stack",
+            width: 1080,
+            height: 1350,
+            overlayUrl: "industrial-craftsman.png",
+            defaultTop: "BEFORE",
+            defaultBottom: "AFTER"
+        },
+        {
             id: "clean_modern_stack",
             name: "Modern Minimalist (Over/Under)",
             type: "stack",
@@ -372,11 +382,19 @@
         }
 
         // Draw dynamic user labels
+        // We will adjust these exact coordinates when we refine the UI, 
+        // but this keeps them centered on the top and bottom panels for now.
         const tText = document.getElementById('topText').value;
         const bText = document.getElementById('bottomText').value;
+        
         ctx.fillStyle = "#ffffff";
-        ctx.font = "bold 56px -apple-system, sans-serif";
+        ctx.font = "bold 56px -apple-system, BlinkMacSystemFont, sans-serif";
         ctx.textAlign = "center";
+        // Optional: add a slight drop shadow so text pops off the frame
+        ctx.shadowColor = "rgba(0,0,0,0.8)";
+        ctx.shadowBlur = 10;
+        ctx.shadowOffsetX = 2;
+        ctx.shadowOffsetY = 2;
         
         if (theme.type === 'stack') {
             ctx.fillText(tText, W/2, 90);
@@ -385,6 +403,9 @@
             ctx.fillText(tText, W/4, 90);
             ctx.fillText(bText, (W/4)*3, 90);
         }
+        
+        // Reset shadow so it doesn't bleed into future renders
+        ctx.shadowColor = "transparent";
 
         canvas.style.display = 'block';
         document.getElementById('downloadBtn').style.display = 'block';
